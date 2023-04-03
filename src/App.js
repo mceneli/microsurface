@@ -1,25 +1,69 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+//import firebase from "firebase/app";
+//import "firebase/auth";
 
-function App() {
+const RegisterLogin = () => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState(null);
+  const [isRegistering, setIsRegistering] = useState(true);
+
+  const handleRegister = async (event) => {
+    event.preventDefault();
+    try {
+      //await firebase.auth().createUserWithEmailAndPassword(email, password);
+    } catch (error) {
+      setError(error.message);
+    }
+  };
+
+  const handleLogin = async (event) => {
+    event.preventDefault();
+    try {
+      //await firebase.auth().signInWithEmailAndPassword(email, password);
+    } catch (error) {
+      setError(error.message);
+    }
+  };
+
+  const handleToggle = () => {
+    setIsRegistering(!isRegistering);
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <h2>{isRegistering ? "Register" : "Login"}</h2>
+      <form onSubmit={isRegistering ? handleRegister : handleLogin}>
+        <label>
+          Email:
+          <input
+            type="email"
+            value={email}
+            onChange={(event) => setEmail(event.target.value)}
+            required
+          />
+        </label>
+        <br />
+        <label>
+          Password:
+          <input
+            type="password"
+            value={password}
+            onChange={(event) => setPassword(event.target.value)}
+            required
+          />
+        </label>
+        <br />
+        {error && <div style={{ color: "red" }}>{error}</div>}
+        <button type="submit">{isRegistering ? "Register" : "Login"}</button>
+      </form>
+      <button onClick={handleToggle}>
+        {isRegistering
+          ? "Already have an account? Login here."
+          : "Don't have an account? Register here."}
+      </button>
     </div>
   );
-}
+};
 
-export default App;
+export default RegisterLogin;
