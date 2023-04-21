@@ -12,6 +12,24 @@ const RegisterLogin = () => {
     event.preventDefault();
     try {
       //await firebase.auth().createUserWithEmailAndPassword(email, password);
+
+      const data = { username: 'example', password: 'password123' };
+
+      fetch('http://192.168.1.5:31609/api/auth/register', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+      })
+      .then(response => response.json())
+      .then(data => {
+        console.log(data);
+      })
+      .catch(error => {
+        console.error(error);
+      });
+
     } catch (error) {
       setError(error.message);
     }
