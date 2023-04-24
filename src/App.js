@@ -1,66 +1,74 @@
 import React, { useState } from "react";
-//import firebase from "firebase/app";
-//import "firebase/auth";
 
 const RegisterLogin = () => {
-  const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState(null);
+  const [message, setMessage] = useState(null);
   const [isRegistering, setIsRegistering] = useState(true);
 
   const handleRegister = async (event) => {
+    setMessage(null);
     event.preventDefault();
     try {
-      //await firebase.auth().createUserWithEmailAndPassword(email, password);
+      const userdata = { username: username, password: password };
 
-      const userdata = { username: 'example', password: 'password123' };
-
-      fetch('http://192.168.1.5:31609/api/auth/register', {
-      //fetch('http://localhost:5000/api/auth/register', {
+      //fetch('http://192.168.1.5:31609/api/auth/register', {
+      fetch('http://localhost:5000/api/auth/register', {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          'Origin': 'http://localhost:3000'
         },
         body: JSON.stringify(userdata)
       })
       .then(response => response.json())
       .then(data => {
         console.log(data);
+        if(data.result === "1"){
+          setMessage("Username already taken");
+        }else{
+          setMessage("Registered successfully");
+        }
       })
       .catch(error => {
         console.error(error);
       });
 
     } catch (error) {
-      setError(error.message);
+      setMessage(error.message);
     }
   };
 
   const handleLogin = async (event) => {
+    setMessage(null);
     event.preventDefault();
     try {
-      const userdata = { username: 'example', password: 'password123' };
+      const userdata = { username: username, password: password };
   
-      const response = await fetch('http://192.168.1.5:31609/api/auth/login', {
-      //const response = await fetch('http://localhost:5000/api/auth/login', {
+      //const response = await fetch('http://192.168.1.5:31609/api/auth/login', {
+      const response = await fetch('http://localhost:5000/api/auth/login', {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          'Origin': 'http://localhost:3000'
         },
         body: JSON.stringify(userdata)
       });
-  
-      if (!response.ok) {
-        throw new Error('Login failed');
+
+      const responseData = await response.json(); // parse the response body
+      if (responseData.result === "1") {
+        throw new Error('User Not Found');
+      }
+      if (responseData.result === "2") {
+        throw new Error('Wrong Password');
       }
   
-      const responseData = await response.json(); // parse the response body
-
       console.log(responseData);
+      setMessage("Logged In");
       localStorage.setItem('token', responseData.token);
   
     } catch (error) {
-      setError(error.message);
+      setMessage(error.message);
     }
   };
 
@@ -73,11 +81,11 @@ const RegisterLogin = () => {
       <h2>{isRegistering ? "Register" : "Login"}</h2>
       <form onSubmit={isRegistering ? handleRegister : handleLogin}>
         <label>
-          Email:
+          Username:
           <input
             type="text"
-            value={email}
-            onChange={(event) => setEmail(event.target.value)}
+            value={username}
+            onChange={(event) => setUsername(event.target.value)}
             required
           />
         </label>
@@ -92,7 +100,7 @@ const RegisterLogin = () => {
           />
         </label>
         <br />
-        {error && <div style={{ color: "red" }}>{error}</div>}
+        {message && <div style={{ color: "red" }}>{message}</div>}
         <button type="submit">{isRegistering ? "Register" : "Login"}</button>
       </form>
       <button onClick={handleToggle}>
@@ -100,6 +108,9 @@ const RegisterLogin = () => {
           ? "Already have an account? Login here."
           : "Don't have an account? Register here."}
       </button>
+
+      <button type="submit">{"Platform"}</button>
+
     </div>
   );
 };
