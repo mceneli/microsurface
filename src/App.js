@@ -13,14 +13,15 @@ const RegisterLogin = () => {
     try {
       //await firebase.auth().createUserWithEmailAndPassword(email, password);
 
-      const data = { username: 'example', password: 'password123' };
+      const userdata = { username: 'example', password: 'password123' };
 
       fetch('http://192.168.1.5:31609/api/auth/register', {
+      //fetch('http://localhost:5000/api/auth/register', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify(data)
+        body: JSON.stringify(userdata)
       })
       .then(response => response.json())
       .then(data => {
@@ -38,7 +39,26 @@ const RegisterLogin = () => {
   const handleLogin = async (event) => {
     event.preventDefault();
     try {
-      //await firebase.auth().signInWithEmailAndPassword(email, password);
+      const userdata = { username: 'example', password: 'password123' };
+  
+      const response = await fetch('http://192.168.1.5:31609/api/auth/login', {
+      //const response = await fetch('http://localhost:5000/api/auth/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(userdata)
+      });
+  
+      if (!response.ok) {
+        throw new Error('Login failed');
+      }
+  
+      const responseData = await response.json(); // parse the response body
+
+      console.log(responseData);
+      localStorage.setItem('token', responseData.token);
+  
     } catch (error) {
       setError(error.message);
     }
@@ -55,7 +75,7 @@ const RegisterLogin = () => {
         <label>
           Email:
           <input
-            type="email"
+            type="text"
             value={email}
             onChange={(event) => setEmail(event.target.value)}
             required
