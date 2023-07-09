@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import MyDataGrid from './components/MyDataGrid';
 
 const RegisterLogin = () => {
   const [username, setUsername] = useState("");
@@ -78,6 +79,7 @@ const RegisterLogin = () => {
 
   return (
     <div>
+      <div>
       <h2>{isRegistering ? "Register" : "Login"}</h2>
       <form onSubmit={isRegistering ? handleRegister : handleLogin}>
         <label>
@@ -102,15 +104,20 @@ const RegisterLogin = () => {
         <br />
         {message && <div style={{ color: "red" }}>{message}</div>}
         <button type="submit">{isRegistering ? "Register" : "Login"}</button>
-      </form>
+      
       <button onClick={handleToggle}>
         {isRegistering
           ? "Already have an account? Login here."
           : "Don't have an account? Register here."}
       </button>
-
-      <button type="submit">{"Platform"}</button>
-
+      </form>
+      </div>
+      
+      <div>
+        <h1>Platforms</h1>
+        <MyDataGrid />
+      </div>
+      
     </div>
   );
 };
