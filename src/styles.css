@@ -47,12 +47,26 @@ button[type="submit"]:hover {
   background-color: #3e8e41;
 }
 
-button {
+.text-button {
   background-color: transparent;
   border: none;
   cursor: pointer;
   color: #4caf50;
   text-decoration: underline;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.center-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.center-button {
+  background-color: transparent;
+  cursor: pointer;
   display: flex;
   justify-content: center;
   align-items: center;

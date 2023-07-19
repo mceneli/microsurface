@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import MyDataGrid from './components/MyDataGrid';
 
 const RegisterLogin = () => {
@@ -6,6 +6,14 @@ const RegisterLogin = () => {
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState(null);
   const [isRegistering, setIsRegistering] = useState(true);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  useEffect(() => {
+    // Perform initialization tasks here
+
+    const token = localStorage.getItem('token');
+    setIsLoggedIn(token !== null);
+  }, []);
 
   const handleRegister = async (event) => {
     setMessage(null);
@@ -67,10 +75,16 @@ const RegisterLogin = () => {
       console.log(responseData);
       setMessage("Logged In");
       localStorage.setItem('token', responseData.token);
-  
+      setIsLoggedIn(true);
     } catch (error) {
       setMessage(error.message);
     }
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    setIsLoggedIn(false);
+    setMessage("Logged Out");
   };
 
   const handleToggle = () => {
@@ -79,6 +93,19 @@ const RegisterLogin = () => {
 
   return (
     <div>
+
+      {isLoggedIn ? (
+      <div> 
+        <div>
+          <div className="center-container">
+            <button className="center-button" onClick={handleLogout}>Logout</button>
+          </div>
+          <div>
+            <h1>Platforms</h1> <MyDataGrid /> 
+          </div>
+        </div>
+      </div>
+        ) : (
       <div>
       <h2>{isRegistering ? "Register" : "Login"}</h2>
       <form onSubmit={isRegistering ? handleRegister : handleLogin}>
@@ -105,20 +132,18 @@ const RegisterLogin = () => {
         {message && <div style={{ color: "red" }}>{message}</div>}
         <button type="submit">{isRegistering ? "Register" : "Login"}</button>
       
-      <button onClick={handleToggle}>
+      <button className="text-button" onClick={handleToggle}>
         {isRegistering
           ? "Already have an account? Login here."
           : "Don't have an account? Register here."}
       </button>
       </form>
+
       </div>
-      
-      <div>
-        <h1>Platforms</h1>
-        <MyDataGrid />
-      </div>
-      
-    </div>
+      )
+    }
+
+  </div>    
   );
 };
 

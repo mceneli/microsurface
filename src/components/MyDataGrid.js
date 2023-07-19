@@ -15,6 +15,7 @@ const initialRows = [
 
 const MyDataGrid = () => {
   const [rows, setRows] = useState(initialRows);
+  const [gridMessage, setMessage] = useState(null);
 
   const bindData = async () => {
     // Perform data binding logic here
@@ -27,10 +28,11 @@ const MyDataGrid = () => {
 
     }));
     
-
     setRows(updatedRows);
+    setMessage("Platforms Listed");
   }else{
-    console.log("Unauthorized");
+    setRows([]);
+    setMessage("Unauthorized");
   }
   };
 
@@ -64,8 +66,9 @@ const MyDataGrid = () => {
 
   return (
     <div style={{ height: 400, width: '100%' }}>
+      <div className="center-container"><button className="center-button" onClick={bindData}>Bind Data</button></div>
+      {gridMessage && <div style={{ color: "red" }}>{gridMessage}</div>}
       <DataGrid rows={rows} columns={columns} pageSize={5} checkboxSelection />
-      <button onClick={bindData}>Bind Data</button>
     </div>
   );
 };
