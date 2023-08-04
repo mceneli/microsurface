@@ -39,8 +39,7 @@ const MyDataGrid = () => {
   const getPlatforms = () => {
     return new Promise((resolve, reject) => {
       
-      //fetch('http://176.217.198.196:31609/api/Platforms', {
-      fetch("http://176.217.198.196:31609/api/Platforms", {
+      fetch(process.env.REACT_APP_API_ENDPOINT+"/api/Platforms", {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',

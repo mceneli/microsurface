@@ -21,13 +21,10 @@ const RegisterLogin = () => {
     try {
       const userdata = { username: username, password: password };
 
-      //fetch('http://192.168.1.5:31609/api/auth/register', {
-      fetch("http://176.217.198.196:31609/api/auth/register", {
-      //fetch('http://176.217.198.196:31609/api/auth/register', {  
+      fetch(process.env.REACT_APP_API_ENDPOINT+"/api/auth/register", { 
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json',
-          'Origin': 'http://localhost:3000'
+          'Content-Type': 'application/json'
         },
         body: JSON.stringify(userdata)
       })
@@ -55,13 +52,10 @@ const RegisterLogin = () => {
     try {
       const userdata = { username: username, password: password };
       
-      //const response = await fetch('http://192.168.1.5:31609/api/auth/login', {
-      const response = await fetch("http://176.217.198.196:31609/api/auth/login", {
-      //const response = await fetch('http://176.217.198.196:31609/api/auth/login', {
+      const response = await fetch(process.env.REACT_APP_API_ENDPOINT+"/api/auth/login", {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json',
-          'Origin': 'http://localhost:3000'
+          'Content-Type': 'application/json'
         },
         body: JSON.stringify(userdata)
       });
