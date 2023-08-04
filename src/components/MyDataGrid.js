@@ -38,11 +38,12 @@ const MyDataGrid = () => {
 
   const getPlatforms = () => {
     return new Promise((resolve, reject) => {
-      fetch('http://localhost:5000/api/Platforms', {
+      
+      //fetch('http://176.217.198.196:31609/api/Platforms', {
+      fetch("http://176.217.198.196:31609/api/Platforms", {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
-          'Origin': 'http://localhost:3000',
           Authorization: 'Bearer ' + localStorage.getItem('token')
         }
       })

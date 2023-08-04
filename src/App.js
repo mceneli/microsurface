@@ -22,7 +22,8 @@ const RegisterLogin = () => {
       const userdata = { username: username, password: password };
 
       //fetch('http://192.168.1.5:31609/api/auth/register', {
-      fetch('http://localhost:5000/api/auth/register', {
+      fetch("http://176.217.198.196:31609/api/auth/register", {
+      //fetch('http://176.217.198.196:31609/api/auth/register', {  
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -53,9 +54,10 @@ const RegisterLogin = () => {
     event.preventDefault();
     try {
       const userdata = { username: username, password: password };
-  
+      
       //const response = await fetch('http://192.168.1.5:31609/api/auth/login', {
-      const response = await fetch('http://localhost:5000/api/auth/login', {
+      const response = await fetch("http://176.217.198.196:31609/api/auth/login", {
+      //const response = await fetch('http://176.217.198.196:31609/api/auth/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
