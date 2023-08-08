@@ -75,3 +75,22 @@ button[type="submit"]:hover {
 button:hover {
   color: #3e8e41;
 }
+
+nav {
+  background-color: #4caf50;
+  text-align: center;
+}
+
+ul {
+  list-style-type: none;
+}
+
+li {
+  display: inline;
+}
+
+li a {
+  text-decoration: none;
+  border: none;
+  padding: 10%;
+}
