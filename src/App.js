@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
-import MyDataGrid from './components/MyDataGrid';
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Navbar from "./components/Navbar";
 import Register from "./pages/Register";
 import Login from "./pages/Login";
 import Home from "./pages/Home";
+
 
 const RegisterLogin = () => {
   const [username, setUsername] = useState("");
@@ -92,19 +93,19 @@ const RegisterLogin = () => {
   };
 
   return (
-    <div>
-      <Home />
-
-      {/*<div>
-      <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Layout />}>
-        <Route path="/register" element={<Register />} />
-        <Route path="/login" element={<Login />} />
-        </Route>
-      </Routes>
-    </BrowserRouter>
+    <div className="fullscreen-page">
+      <Router>
+      <div>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/login" element={<Login />} />
+        </Routes>
       </div>
+      <Navbar />
+    </Router>
+
+      {/*
       {isLoggedIn ? (
       <div> 
         <div>

@@ -1,25 +1,49 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Register from "./Register";
-import Login from "./Login";
-import Navbar from "../components/Navbar";
-import MyDataGrid from "../components/MyDataGrid";
+import React from 'react';
+import '../styles.css';
+import MyDataGrid from '../components/MyDataGrid';
 
-function Home() {
-  return (<div>
-    <BrowserRouter>
-      <Navbar />
-      <Routes>
-        <Route path="/register" element={<Register/>} />
-        <Route path="/login" element={<Login/>} />
-      </Routes>
-    </BrowserRouter>
-    
-    <div>
-      <h1>Platforms</h1> <MyDataGrid /> 
+import { styled } from '@mui/material/styles';
+import Grid from '@mui/material/Grid';
+import Paper from '@mui/material/Paper';
+import Box from '@mui/material/Box';
+
+const Home = () => {
+
+  const Item = styled(Paper)(({ theme }) => ({
+    backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
+    ...theme.typography.body2,
+    padding: theme.spacing(1),
+    textAlign: 'center',
+    color: theme.palette.text.secondary,
+  }));
+
+
+  return (
+    <div className="fullscreen-page">
+      <h1>Home Page</h1>
+
+      {/*<div>
+            <h1>Platforms</h1> <MyDataGrid /> 
+      </div>*/}
+      <div>
+        <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
+          <Grid item xs={12}>
+            <Item>1</Item>
+          </Grid>
+          <Grid item xs={12}>
+            <Item>2</Item>
+          </Grid>
+          <Grid item xs={12}>
+            <Item>3</Item>
+          </Grid>
+          <Grid item xs={12}>
+            <Item>4</Item>
+          </Grid>
+        </Grid>
+      </div>
+
     </div>
-
-  </div>
   );
-}
-  
+};
+
 export default Home;

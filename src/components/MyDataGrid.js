@@ -18,8 +18,7 @@ const MyDataGrid = () => {
   const [gridMessage, setMessage] = useState(null);
 
   const bindData = async () => {
-    // Perform data binding logic here
-    if(localStorage.getItem('token')!=null){
+    //if(localStorage.getItem('token')!=null){
     const rows = await getPlatforms();
 
     const updatedRows = rows.map((row) => ({
@@ -30,10 +29,10 @@ const MyDataGrid = () => {
     
     setRows(updatedRows);
     setMessage("Platforms Listed");
-  }else{
+  /*}else{
     setRows([]);
     setMessage("Unauthorized");
-  }
+  }*/
   };
 
   const getPlatforms = () => {
