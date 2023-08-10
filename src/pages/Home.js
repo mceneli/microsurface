@@ -1,47 +1,30 @@
 import React from 'react';
 import '../styles.css';
-import MyDataGrid from '../components/MyDataGrid';
-
-import { styled } from '@mui/material/styles';
-import Grid from '@mui/material/Grid';
-import Paper from '@mui/material/Paper';
-import Box from '@mui/material/Box';
+import TweetFeed from '../components/TweetFeed';
 
 const Home = () => {
 
-  const Item = styled(Paper)(({ theme }) => ({
-    backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
-    ...theme.typography.body2,
-    padding: theme.spacing(1),
-    textAlign: 'center',
-    color: theme.palette.text.secondary,
-  }));
+  const tweets = [
+    { username: 'user1', content: 'Tweet content 1', timestamp: '10 minutes ago' },
+    { username: 'user2', content: 'Tweet content 2', timestamp: '20 minutes ago' },
+    { username: 'user2', content: 'Tweet content 2', timestamp: '20 minutes ago' },
+    { username: 'user2', content: 'Tweet content 2', timestamp: '20 minutes ago' },
+    { username: 'user2', content: 'Tweet content 2', timestamp: '20 minutes ago' },
+    { username: 'user2', content: 'Tweet content 2', timestamp: '20 minutes ago' },
+    { username: 'user2', content: 'Tweet content 2', timestamp: '20 minutes ago' },
+    { username: 'user2', content: 'Tweet content 2', timestamp: '20 minutes ago' },
+    { username: 'user2', content: 'Tweet content 2', timestamp: '20 minutes ago' },
+    // ... daha fazla tweet nesnesi ...
+  ];
 
 
   return (
     <div className="fullscreen-page">
       <h1>Home Page</h1>
 
-      {/*<div>
-            <h1>Platforms</h1> <MyDataGrid /> 
-      </div>*/}
       <div>
-        <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
-          <Grid item xs={12}>
-            <Item>1</Item>
-          </Grid>
-          <Grid item xs={12}>
-            <Item>2</Item>
-          </Grid>
-          <Grid item xs={12}>
-            <Item>3</Item>
-          </Grid>
-          <Grid item xs={12}>
-            <Item>4</Item>
-          </Grid>
-        </Grid>
+        <TweetFeed tweets={tweets} />
       </div>
-
     </div>
   );
 };

@@ -96,7 +96,8 @@ li a {
 }
 
 .fullscreen-page {
-  width: 100%;
+  width: 100vw;
+  max-width: 400px;
   height: 90vh; /* Set the height to the viewport height */
   background-color: #f0f0f0; /* Example background color */
   display: flex;
@@ -105,6 +106,49 @@ li a {
   flex-direction: column;
 }
 
-.MuiBottomNavigation-root.css-16lloyr-MuiBottomNavigation-root {
-  width: 100%;
+.tweet-feed {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-height: 650px; /* Max height for the tweet feed container */
+  overflow-y: scroll; /* Add vertical scroll */
+  width:96vw;
+}
+
+.tweet-feed::-webkit-scrollbar {
+  width: 0.5em; /* Width of the scrollbar */
+}
+
+.tweet-feed::-webkit-scrollbar-thumb {
+  background-color: transparent; /* Make the thumb (draggable part) transparent */
+}
+
+.tweet {
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 10px;
+  margin: 10px;
+  width: 88vw;
+  max-width: 400px;
+  background-color: white;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.tweet-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 5px;
+}
+
+.username {
+  font-weight: bold;
+}
+
+.timestamp {
+  color: #999;
+  font-size: 12px;
+}
+
+.tweet-content {
+  font-size: 14px;
 }
