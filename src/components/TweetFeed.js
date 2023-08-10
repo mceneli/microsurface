@@ -2,6 +2,7 @@ import React from 'react';
 import Tweet from './Tweet'; // Tweet bileşenini içe aktarın
 
 const TweetFeed = ({ tweets }) => {
+
   return (
     <div className="tweet-feed">
       {tweets.map((tweet, index) => (
