@@ -12,6 +12,13 @@ const initialRows = [
   { username: 'user2', content: 'Tweet content 2', timestamp: '20 minutes ago' },
   { username: 'user2', content: 'Tweet content 2', timestamp: '20 minutes ago' },
   { username: 'user2', content: 'Tweet content 2', timestamp: '20 minutes ago' },
+  { username: 'user2', content: 'Tweet content 2', timestamp: '20 minutes ago' },
+  { username: 'user2', content: 'Tweet content 2', timestamp: '20 minutes ago' },
+  { username: 'user2', content: 'Tweet content 2', timestamp: '20 minutes ago' },
+  { username: 'user2', content: 'Tweet content 2', timestamp: '20 minutes ago' },
+  { username: 'user2', content: 'Tweet content 2', timestamp: '20 minutes ago' },
+  { username: 'user2', content: 'Tweet content 2', timestamp: '20 minutes ago' },
+  { username: 'user2', content: 'Tweet content 2', timestamp: '20 minutes ago' },
   // ... daha fazla tweet nesnesi ...
 ];
 
