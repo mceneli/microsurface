@@ -73,7 +73,7 @@ const Home = () => {
 
   return (
     <div className="fullscreen-page">
-      <center><h1>Home Page</h1></center>
+      <center><div height="15vh"><h1>Home Page</h1></div></center>
 
       <div>
         <TweetFeed tweets={rows} />

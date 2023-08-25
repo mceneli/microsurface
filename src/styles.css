@@ -129,7 +129,6 @@ li a {
   border-radius: 8px;
   padding: 10px;
   margin: 10px;
-  /*max-width: 400px;*/
   background-color: white;
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
 }
@@ -157,5 +156,7 @@ li a {
   overflow: hidden;
   position: fixed;
   bottom: 0;
+  height:10vh;
+  width:100vw;
   max-width: 400px;
 }
