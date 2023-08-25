@@ -152,3 +152,9 @@ li a {
 .tweet-content {
   font-size: 14px;
 }
+
+.bottom-navbar {
+  overflow: hidden;
+  position: fixed;
+  bottom: 0;
+}

@@ -13,7 +13,7 @@ const Navbar = () => {
   };
 
   return (
-    <div>
+    <div className="bottom-navbar">
       <BottomNavigation style={{ width: '100vw' , height: '10vh'}} value={value} onChange={handleChange} showLabels>
         <BottomNavigationAction label="Home" icon={<Home />} component={Link} to="/" />
         <BottomNavigationAction label="Register" icon={<AppRegistrationIcon />} component={Link} to="/register" />
