@@ -4,7 +4,7 @@ import '../styles.css';
 const Register = () => {
   return (
     <div className="fullscreen-page">
-      <center><h1>Register Page</h1></center>
+      <center className="page-header"><h1>Register Page</h1></center>
     </div>
   );
 };

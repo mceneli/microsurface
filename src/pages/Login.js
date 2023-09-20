@@ -4,7 +4,7 @@ import '../styles.css';
 const Login = () => {
   return (
     <div className="fullscreen-page">
-      <center><h1>Login Page</h1></center>
+      <center className="page-header"><h1>Login Page</h1></center>
     </div>
   );
 };

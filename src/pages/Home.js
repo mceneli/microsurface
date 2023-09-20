@@ -18,7 +18,7 @@ const initialRows = [
   { username: 'user2', content: 'Tweet content 2', timestamp: '20 minutes ago' },
   { username: 'user2', content: 'Tweet content 2', timestamp: '20 minutes ago' },
   { username: 'user2', content: 'Tweet content 2', timestamp: '20 minutes ago' },
-  { username: 'user2', content: 'Tweet content 2', timestamp: '20 minutes ago' },
+  { username: 'user2', content: 'Tweet content 2', timestamp: '19 minutes ago' },
   // ... daha fazla tweet nesnesi ...
 ];
 
@@ -33,7 +33,7 @@ const Home = () => {
       ...row,
       username: `${row.userName}`,
       content: `${row.text}`,
-      timestamp: '20 minutes ago',
+      timestamp: `${row.timestamp}`,
 
     }));
 
@@ -73,11 +73,11 @@ const Home = () => {
 
   return (
     <div className="fullscreen-page">
-      <center><div height="15vh"><h1>Home Page</h1></div></center>
+      <center><div className="page-header" ><h1>Home Page</h1></div></center>
 
       <div>
         <TweetFeed tweets={rows} />
-        <div className="center-container"><button className="center-button" onClick={bindData}>Bind Data</button></div>
+        <div className="center-button"><button onClick={bindData}>Get Tweets</button></div>
       </div>
     
     </div>
