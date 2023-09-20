@@ -72,12 +72,16 @@ const Home = () => {
   };
 
   return (
-    <div className="fullscreen-page">
-      <center><div className="page-header" ><h1>Home Page</h1></div></center>
+    <div>
+      <center>
+        <div className="page-header">
+          <div className="header-column"><h1>Home Page</h1></div>
+          <div className="header-column"><button onClick={bindData}>Get Tweets</button><button>Send Tweet</button></div>
+        </div>
+      </center>
 
       <div>
         <TweetFeed tweets={rows} />
-        <div className="center-button"><button onClick={bindData}>Get Tweets</button></div>
       </div>
     
     </div>

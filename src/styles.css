@@ -73,6 +73,7 @@ button[type="submit"]:hover {
   position: fixed;
   top:4%;
   right:4%;
+  max-width: 400px;
 }
 
 button:hover {
@@ -104,10 +105,10 @@ li a {
   height: 90%; /* Set the height to the viewport height */
   background-color: #f0f0f0; /* Example background color */
   /*display: flex;*/
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  border: 1px solid #040404;
+  /*align-items: center;
+  justify-content: center;*/
+  /*flex-direction: column;*/
+  /*border: 1px solid #040404;*/
 }
 
 .tweet-feed {
@@ -119,12 +120,13 @@ li a {
   width:96vw;
   max-width: 400px;
   position: fixed;
-  border: 1px solid #21a4ad;
+  /*border: 1px solid #21a4ad;*/
+  margin-top:0%;
 }
 
 .page-header {
   height: 10%;
-  border: 1px solid #21ad31;
+  /*border: 1px solid #21ad31;*/
 }
 
 .tweet-feed::-webkit-scrollbar {
@@ -170,9 +172,22 @@ li a {
   height:7%;
   width:100vw;
   max-width: 400px;
-  border: 1px solid #73AD21;
+  /*border: 1px solid #73AD21;*/
 }
 
 .navbar-component {
   height: 100%;
+}
+
+.header-column {
+  float: left;
+  width: 50%;
+  height: 10%;
+}
+
+/* Clear floats after the columns */
+.page-header:after {
+  content: "";
+  display: table;
+  clear: both;
 }
