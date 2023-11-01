@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import '../styles.css';
 import TweetFeed from '../components/TweetFeed';
+import TwitForm from '../components/TwitForm';
 
 const initialRows = [
   { username: 'user1', content: 'Tweet content 1', timestamp: '10 minutes ago' },
@@ -24,8 +25,10 @@ const initialRows = [
 
 const Home = () => {
   const [rows, setRows] = useState(initialRows);
+  const [checkTwitForm, setCheckTwitForm] = useState(false);
 
   const bindData = async () => {
+    setCheckTwitForm(false);
     //if(localStorage.getItem('token')!=null){
     const rows = await getTweets();
 
@@ -76,14 +79,21 @@ const Home = () => {
       <center>
         <div className="page-header">
           <div className="header-column"><h1>Home Page</h1></div>
-          <div className="header-column"><button onClick={bindData}>Get Tweets</button><button>Send Tweet</button></div>
+          <div className="header-column"><button onClick={bindData} >Get Tweets</button>
+                                          <button onClick={() =>setCheckTwitForm(true)} >Send Tweet</button></div>
         </div>
       </center>
 
-      <div>
+      {checkTwitForm ?
+      (<div>
+        <TwitForm/>
+      </div>)
+      :
+      (<div>
         <TweetFeed tweets={rows} />
-      </div>
-    
+      </div>)
+      }
+
     </div>
   );
 };
