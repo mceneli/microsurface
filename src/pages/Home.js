@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import '../styles.css';
 import TweetFeed from '../components/TweetFeed';
-import TwitForm from '../components/TwitForm';
+import TweetForm from '../components/TweetForm';
 
 const initialRows = [
   { username: 'user1', content: 'Tweet content 1', timestamp: '10 minutes ago' },
@@ -32,13 +32,23 @@ const Home = () => {
     //if(localStorage.getItem('token')!=null){
     const rows = await getTweets();
 
-    const updatedRows = rows.map((row) => ({
-      ...row,
-      username: `${row.userName}`,
-      content: `${row.text}`,
-      timestamp: `${row.timestamp}`,
-
-    }));
+    const updatedRows = rows.map((row) => {
+      const date = new Date(row.date);
+    
+      const day = date.getDate();
+      const month = date.getMonth() + 1;
+      const year = date.getFullYear();
+      const hour = date.getHours();
+      const minute = date.getMinutes();
+      const second = date.getSeconds();
+    
+      return {
+        ...row,
+        username: `${row.userName}`,
+        content: `${row.text}`,
+        timestamp: `${day}/${month}/${year} ${hour}:${minute}:${second}`,
+      };
+    });
 
     setRows(updatedRows);
     //setMessage("Tweets Listed");
@@ -84,9 +94,9 @@ const Home = () => {
         </div>
       </center>
 
-      {checkTwitForm ?
+      {(checkTwitForm && localStorage.getItem('token') != null) ?
       (<div>
-        <TwitForm/>
+        <TweetForm/>
       </div>)
       :
       (<div>

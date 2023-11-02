@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
-const TwitForm = () => {
-    const [twitContent, setTwitContent] = useState('');
+const TweetForm = () => {
+    const [tweetContent, setTweetContent] = useState('');
     const [userName, setUserName] = useState('');
 
     useEffect(() => {
@@ -26,27 +26,48 @@ const TwitForm = () => {
           return null;
         }
       };
+
+      const sendTweet = async () => {
+        try {
+          const data = { username: userName, text: tweetContent};
+          
+          const response = await fetch(process.env.REACT_APP_API_ENDPOINT+"/api/tweets/CreateTweet", {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              Authorization: 'Bearer ' + localStorage.getItem('token')
+            },
+            body: JSON.stringify(data)
+          });
+          if(response){
+            console.log("Tweet Created.");
+          }
+        } catch (error) {
+          console.log(error.message);
+        }
+      
+      };
     
   return (
     <div>
 
     <label htmlFor="userName">Kullanıcı Adı:{userName}</label>
 
-      <label htmlFor="twitContent">Twit İçeriği:</label>
+      <label htmlFor="tweetContent">Tweet İçeriği:</label>
       <textarea
-        id="twitContent"
-        name="twitContent"
-        value={twitContent}
-        onChange={(e) => setTwitContent(e.target.value)}
+        id="tweetContent"
+        name="tweetContent"
+        value={tweetContent}
+        onChange={(e) => setTweetContent(e.target.value)}
         rows="4"
         required
       ></textarea>
 
-      <button type="button" /*onClick={handleSubmit}*/>
-        Twit Gönder
+      <button type="button" onClick={sendTweet}>
+        Tweet Gönder
       </button>
     </div>
   );
 };
 
-export default TwitForm;
+export default TweetForm;
