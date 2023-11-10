@@ -84,6 +84,36 @@ const Home = () => {
     });
   };
 
+  const handleDelete = async (index) => {
+    try {
+      console.log(index);
+      console.log(rows[index].id);
+      // Silinecek tweet'in id'sini al
+      const tweetIdToDelete = rows[index].id; // Bu kısmı gerçek uygulamanıza göre ayarlamalısınız
+
+      // Silme isteğini API'ye gönder
+      const response = await fetch(process.env.REACT_APP_API_ENDPOINT + `/api/Tweets/${tweetIdToDelete}`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: 'Bearer ' + localStorage.getItem('token')
+        },
+      });
+
+      if (response.ok) {
+        // Başarılı bir şekilde silindiği varsayılıyor, yerel state'i güncelle
+        const updatedRows = [...rows];
+        updatedRows.splice(index, 1);
+        setRows(updatedRows);
+        console.log('Tweet başarıyla silindi.');
+      } else {
+        console.error('Tweet silinirken bir hata oluştu.');
+      }
+    } catch (error) {
+      console.error('Tweet silinirken bir hata oluştu:', error.message);
+    }
+  };
+
   return (
     <div>
       <center>
@@ -100,7 +130,7 @@ const Home = () => {
       </div>)
       :
       (<div>
-        <TweetFeed tweets={rows} />
+        <TweetFeed tweets={rows} onDelete={handleDelete}/>
       </div>)
       }
 

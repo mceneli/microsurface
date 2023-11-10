@@ -39,7 +39,6 @@ const handleLogin = async (event) => {
     console.log(responseData);
     console.log("Logged In");
     localStorage.setItem('token', responseData.token);
-    console.log(true);
   } catch (error) {
     console.log(error.message);
   }

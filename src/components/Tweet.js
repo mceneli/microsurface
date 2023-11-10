@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Tweet = ({ username, content, timestamp }) => {
+const Tweet = ({ username, content, timestamp, onDelete }) => {
   return (
     <div className="tweet">
       <div className="tweet-header">
@@ -10,6 +10,9 @@ const Tweet = ({ username, content, timestamp }) => {
       <div className="tweet-content">
         {content}
       </div>
+      <button className="delete-button" onClick={onDelete}>
+        Sil
+      </button>
     </div>
   );
 };

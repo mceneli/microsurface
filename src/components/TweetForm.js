@@ -49,24 +49,23 @@ const TweetForm = () => {
       };
     
   return (
-    <div>
+    <div className="tweet-form-container">
+    <label htmlFor="userName">Kullanıcı Adı: {userName}</label>
 
-    <label htmlFor="userName">Kullanıcı Adı:{userName}</label>
+    <label htmlFor="tweetContent">Tweet İçeriği:</label>
+    <textarea
+      id="tweetContent"
+      name="tweetContent"
+      value={tweetContent}
+      onChange={(e) => setTweetContent(e.target.value)}
+      rows="4"
+      required
+    ></textarea>
 
-      <label htmlFor="tweetContent">Tweet İçeriği:</label>
-      <textarea
-        id="tweetContent"
-        name="tweetContent"
-        value={tweetContent}
-        onChange={(e) => setTweetContent(e.target.value)}
-        rows="4"
-        required
-      ></textarea>
-
-      <button type="button" onClick={sendTweet}>
-        Tweet Gönder
-      </button>
-    </div>
+    <button type="button" className="send-button" onClick={sendTweet}>
+      Tweet Gönder
+    </button>
+  </div>
   );
 };
 
