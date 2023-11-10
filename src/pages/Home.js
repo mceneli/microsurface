@@ -105,12 +105,13 @@ const Home = () => {
         const updatedRows = [...rows];
         updatedRows.splice(index, 1);
         setRows(updatedRows);
-        console.log('Tweet başarıyla silindi.');
+        console.log('The tweet was successfully deleted.');
       } else {
-        console.error('Tweet silinirken bir hata oluştu.');
+        const errorData = await response.json();
+        console.log(errorData.message); // Tweet does not belong to the user
       }
     } catch (error) {
-      console.error('Tweet silinirken bir hata oluştu:', error.message);
+      console.error('An error occurred while deleting the tweet:', error.message);
     }
   };
 

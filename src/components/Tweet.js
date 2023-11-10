@@ -1,6 +1,16 @@
 import React from 'react';
+import { decodeToken } from '../util/Util';
 
 const Tweet = ({ username, content, timestamp, onDelete }) => {
+  let loggedInUserName = "";
+  const token = localStorage.getItem('token');
+  if(token){
+    const decodedToken = decodeToken(localStorage.getItem('token'));
+    if(decodedToken != null){
+      loggedInUserName = decodedToken["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name"] || "";
+    }
+  }
+  
   return (
     <div className="tweet">
       <div className="tweet-header">
@@ -10,9 +20,11 @@ const Tweet = ({ username, content, timestamp, onDelete }) => {
       <div className="tweet-content">
         {content}
       </div>
-      <button className="delete-button" onClick={onDelete}>
-        Sil
-      </button>
+      {loggedInUserName == username && (
+        <button className="delete-button" onClick={onDelete}>
+          Sil
+        </button>
+      )}
     </div>
   );
 };

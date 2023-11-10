@@ -1,32 +1,21 @@
 import React, { useState, useEffect } from 'react';
+import { decodeToken } from '../util/Util';
 
 const TweetForm = () => {
     const [tweetContent, setTweetContent] = useState('');
     const [userName, setUserName] = useState('');
-
+    let token = null;
+    if(localStorage.getItem('token')){
+      token = decodeToken(localStorage.getItem('token'));
+    }
+    
     useEffect(() => {
-          const decodedToken = decodeToken(localStorage.getItem('token'));
-          setUserName(decodedToken["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name"]);
-      }, [localStorage.getItem('token')]);
+      if (token) {
+        
+        setUserName(token["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name"]);
+      }    
+    }, [token]);
     
-    const decodeToken = (token) => {
-        try {
-          const base64Url = token.split('.')[1];
-          const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-          const jsonPayload = decodeURIComponent(
-            atob(base64)
-              .split('')
-              .map((c) => '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2))
-              .join('')
-          );
-    
-          return JSON.parse(jsonPayload);
-        } catch (error) {
-          console.error('Error decoding token:', error);
-          return null;
-        }
-      };
-
       const sendTweet = async () => {
         try {
           const data = { username: userName, text: tweetContent};
