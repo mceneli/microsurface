@@ -13,6 +13,7 @@ const TweetFeed = ({ tweets, onDelete }) => {
           content={tweet.content}
           timestamp={tweet.timestamp}
           onDelete={() => onDelete(index)}
+          base64Image={tweet.imagePath}
         />
       ))}
     </div>

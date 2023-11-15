@@ -1,7 +1,7 @@
 import React from 'react';
 import { decodeToken } from '../util/Util';
 
-const Tweet = ({ username, content, timestamp, onDelete }) => {
+const Tweet = ({ username, content, timestamp, onDelete, base64Image}) => {
   let loggedInUserName = "";
   const token = localStorage.getItem('token');
   if(token){
@@ -20,6 +20,11 @@ const Tweet = ({ username, content, timestamp, onDelete }) => {
       <div className="tweet-content">
         {content}
       </div>
+      {base64Image && (
+        <div className="tweet-image">
+          <img src={`data:image/jpeg;base64,${base64Image}`} alt="Tweet Image" style={{ maxWidth: '100%', maxHeight: '350px' }}/>
+        </div>
+      )}
       {loggedInUserName == username && (
         <button className="delete-button" onClick={onDelete}>
           Sil
