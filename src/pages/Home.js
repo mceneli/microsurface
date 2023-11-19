@@ -5,28 +5,17 @@ import TweetForm from '../components/TweetForm';
 
 const initialRows = [
   { username: 'user1', content: 'Tweet content 1', timestamp: '10 minutes ago' },
+  { username: 'user1', content: 'Tweet content 2', timestamp: '20 minutes ago' },
   { username: 'user2', content: 'Tweet content 2', timestamp: '20 minutes ago' },
   { username: 'user2', content: 'Tweet content 2', timestamp: '20 minutes ago' },
   { username: 'user2', content: 'Tweet content 2', timestamp: '20 minutes ago' },
-  { username: 'user2', content: 'Tweet content 2', timestamp: '20 minutes ago' },
-  { username: 'user2', content: 'Tweet content 2', timestamp: '20 minutes ago' },
-  { username: 'user2', content: 'Tweet content 2', timestamp: '20 minutes ago' },
-  { username: 'user2', content: 'Tweet content 2', timestamp: '20 minutes ago' },
-  { username: 'user2', content: 'Tweet content 2', timestamp: '20 minutes ago' },
-  { username: 'user2', content: 'Tweet content 2', timestamp: '20 minutes ago' },
-  { username: 'user2', content: 'Tweet content 2', timestamp: '20 minutes ago' },
-  { username: 'user2', content: 'Tweet content 2', timestamp: '20 minutes ago' },
-  { username: 'user2', content: 'Tweet content 2', timestamp: '20 minutes ago' },
-  { username: 'user2', content: 'Tweet content 2', timestamp: '20 minutes ago' },
-  { username: 'user2', content: 'Tweet content 2', timestamp: '20 minutes ago' },
-  { username: 'user2', content: 'Tweet content 2', timestamp: '19 minutes ago' },
   // ... daha fazla tweet nesnesi ...
 ];
 
 const Home = () => {
   const [rows, setRows] = useState(initialRows);
   const [checkTwitForm, setCheckTwitForm] = useState(false);
-
+  
   const bindData = async () => {
     setCheckTwitForm(false);
     //if(localStorage.getItem('token')!=null){
@@ -64,7 +53,8 @@ const Home = () => {
       fetch(process.env.REACT_APP_API_ENDPOINT+"/api/Tweets", {
         method: 'GET',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          Authorization: 'Bearer ' + localStorage.getItem('token')
         }
       })
         .then(response => {

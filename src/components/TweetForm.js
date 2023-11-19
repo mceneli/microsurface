@@ -71,15 +71,15 @@ const TweetForm = () => {
       required
     ></textarea>
 
-    {selectedImage || 1 ? (
-      <div><div>
-        <img src={selectedImage} alt="Seçilen Resim" style={{ maxWidth: '100%' }} />
+    {selectedImage ? (
+      <div>
+        <img src={selectedImage} alt="Seçilen Resim" style={{ maxWidth: '100%', maxHeight: '400px' }} />
       </div>
+      
+    ):(
       <label htmlFor="image">Resim Ekle: 
         <input type="file" id="image" accept="image/*" onChange={handleImageChange} />
-      </label></div>
-    ):(
-      <label>asd</label>
+      </label>
     )}
 
     <button type="button" className="send-button" onClick={sendTweet}>
