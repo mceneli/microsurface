@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { useLocation, useParams } from 'react-router-dom';
+import React, { useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import TweetFeed from '../components/TweetFeed';
 
 const initialRows = [
@@ -8,15 +8,14 @@ const initialRows = [
     // ... daha fazla tweet nesnesi ...
 ];
 
-const User = (props) => {
+const User = () => {
     const location = useLocation();
     const params = new URLSearchParams(location.search);
     const username = params.get('username');
     const [rows, setRows] = useState(initialRows);
 
     const bindData = async () => {
-        //if(localStorage.getItem('token')!=null){
-        const rows = await getTweets();
+        const rows = await getUserTweets();
     
         const updatedRows = rows.map((row) => {
           const date = new Date(row.date);
@@ -44,10 +43,10 @@ const User = (props) => {
       }*/
       };
     
-      const getTweets = () => {
+      const getUserTweets = () => {
         return new Promise((resolve, reject) => {
           
-          fetch(process.env.REACT_APP_API_ENDPOINT+"/api/Tweets", {
+          fetch(process.env.REACT_APP_API_ENDPOINT+"/api/Tweets/GetTweetsByUsername/"+username, {
             method: 'GET',
             headers: {
               'Content-Type': 'application/json',
@@ -72,19 +71,11 @@ const User = (props) => {
       };
 
   return (
-    /*<div>
-      <h2>User Page</h2>
-      <p>username : {username}</p>
-      
-      <h3>User Tweets</h3>
-      <TweetFeed tweets={rows}/>
-
-    </div>*/
     <div>
       <center>
         <div className="page-header">
           <div className="header-column"><h1>User Page</h1></div>
-          <div className="header-column"><button /*onClick={bindData}*/ >Get User Tweets</button>
+          <div className="header-column"><button onClick={bindData} >Get User Tweets</button>
                                          </div>
         </div>
         <p>username : {username}</p>
