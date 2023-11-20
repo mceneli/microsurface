@@ -5,7 +5,7 @@ import Register from "./pages/Register";
 import Login from "./pages/Login";
 import Home from "./pages/Home";
 import Profiles from "./pages/Profiles";
-
+import User from "./pages/User";
 
 const RegisterLogin = () => {
   const [username, setUsername] = useState("");
@@ -102,6 +102,7 @@ const RegisterLogin = () => {
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
           <Route path="/profiles" element={<Profiles />} />
+          <Route path="/user" element={<User />} />
         </Routes>
       </div>
       <Navbar />
