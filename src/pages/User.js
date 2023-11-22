@@ -1,18 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import TweetFeed from '../components/TweetFeed';
-
-const initialRows = [
-    { username: 'user1', content: 'Tweet content 1', timestamp: '10 minutes ago' },
-    { username: 'user1', content: 'Tweet content 2', timestamp: '20 minutes ago' },
-    // ... daha fazla tweet nesnesi ...
-];
+import { deleteTweet } from '../util/Util';
 
 const User = () => {
     const location = useLocation();
     const params = new URLSearchParams(location.search);
     const username = params.get('username');
-    const [rows, setRows] = useState(initialRows);
+    const [rows, setRows] = useState([]);
+    const [checkPrivate, setCheckPrivate] = useState(false);
 
     const bindData = async () => {
         const rows = await getUserTweets();
@@ -36,11 +32,6 @@ const User = () => {
         });
     
         setRows(updatedRows);
-        //setMessage("Tweets Listed");
-      /*}else{
-        setRows([]);
-        setMessage("Unauthorized");
-      }*/
       };
     
       const getUserTweets = () => {
@@ -57,7 +48,11 @@ const User = () => {
               if (response.ok) {
                 return response.json();
               } else {
-                throw new Error('Error while getting tweets');
+                if(response.statusText === "Bad Request"){
+                  console.log('Profile is Hidden');
+                  setCheckPrivate(true);
+                  return [];
+                }
               }
             })
             .then(responseData => {
@@ -70,19 +65,27 @@ const User = () => {
         });
       };
 
+    useEffect(() => {
+      bindData();
+    }, []);
+
+    const handleDelete = async (index) => {
+      const updatedRows = await deleteTweet(rows, index);
+      setRows(updatedRows);
+    };
+
   return (
     <div>
       <center>
         <div className="page-header">
           <div className="header-column"><h1>User Page</h1></div>
-          <div className="header-column"><button onClick={bindData} >Get User Tweets</button>
-                                         </div>
         </div>
-        <p>username : {username}</p>
+        <p>username: {username}</p>
+        {checkPrivate && <p>Account is private</p>}
       </center>
       
       <div>
-      <TweetFeed tweets={rows}/>
+        <TweetFeed tweets={rows} onDelete={handleDelete}/>
       </div>
       
     </div>

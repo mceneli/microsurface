@@ -15,3 +15,33 @@ export const decodeToken = (token) => {
       return null;
     }
   };
+
+export const deleteTweet = async (rows, index) => {
+    try {
+      console.log(index);
+      console.log(rows[index].id);
+      const tweetIdToDelete = rows[index].id;
+  
+      const response = await fetch(process.env.REACT_APP_API_ENDPOINT + `/api/Tweets/${tweetIdToDelete}`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: 'Bearer ' + localStorage.getItem('token')
+        },
+      });
+  
+      if (response.ok) {
+        const updatedRows = [...rows];
+        updatedRows.splice(index, 1);
+        console.log('The tweet was successfully deleted.');
+        return updatedRows;
+      } else {
+        const errorData = await response.json();
+        console.log(errorData.message);
+        return rows; // Silme başarısız olursa orijinal rows'u döndür
+      }
+    } catch (error) {
+      console.error('An error occurred while deleting the tweet:', error.message);
+      return rows; // Hata olursa orijinal rows'u döndür
+    }
+  };

@@ -1,20 +1,16 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import '../styles.css';
 import ProfileFeed from '../components/ProfileFeed';
 
-const initialProfiles = [
-    { username: 'user1', },
-    { username: 'user2', },
-    // ... daha fazla profile nesnesi ...
-];
-
 const Profiles = () => {
-    const [profiles, setProfiles] = useState(initialProfiles);
+    const [profiles, setProfiles] = useState([]);
+
+    useEffect(() => {
+      bindData();
+    }, []);
 
     const bindData = async () => {
-
         const profiles = await getUsers();
-    
         const updatedProfiles = profiles.map((profile) => {
           return {
             ...profile,
@@ -24,39 +20,34 @@ const Profiles = () => {
         setProfiles(updatedProfiles);
       };
 
-    const getUsers = () => {
-        return new Promise((resolve, reject) => {
-          
-          fetch(process.env.REACT_APP_API_ENDPOINT+"/api/Users", {
-            method: 'GET',
-            headers: {
-              'Content-Type': 'application/json'
-            }
-          })
-            .then(response => {
-              if (response.ok) {
-                return response.json();
-              } else {
-                throw new Error('Error while getting users');
-              }
-            })
-            .then(responseData => {
-              console.log(responseData);
-              resolve(responseData);
-            })
-            .catch(error => {
-              reject(error);
+      const getUsers = async () => {
+        try {
+            const response = await fetch(process.env.REACT_APP_API_ENDPOINT + "/api/Users", {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
             });
-        });
-      };
+
+            if (!response.ok) {
+                throw new Error('Error while getting users');
+            }
+
+            const responseData = await response.json();
+            console.log(responseData);
+
+            return responseData;
+        } catch (error) {
+            console.error('An error occurred while fetching users:', error.message);
+            return [];
+        }
+    };
     
     return (
     <div>
       <center>
         <div className="page-header">
           <div className="header-column"><h1>Profiles</h1></div>
-          <div className="header-column"><button onClick={bindData} >Get Profiles</button>
-                                         </div>
         </div>
       </center>
       
@@ -64,7 +55,6 @@ const Profiles = () => {
         <ProfileFeed profiles={profiles} />
       </div>
       
-
     </div>
   );
 };

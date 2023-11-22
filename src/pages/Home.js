@@ -1,24 +1,19 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import '../styles.css';
 import TweetFeed from '../components/TweetFeed';
 import TweetForm from '../components/TweetForm';
-
-const initialRows = [
-  { username: 'user1', content: 'Tweet content 1', timestamp: '10 minutes ago' },
-  { username: 'user1', content: 'Tweet content 2', timestamp: '20 minutes ago' },
-  { username: 'user2', content: 'Tweet content 2', timestamp: '20 minutes ago' },
-  { username: 'user2', content: 'Tweet content 2', timestamp: '20 minutes ago' },
-  { username: 'user2', content: 'Tweet content 2', timestamp: '20 minutes ago' },
-  // ... daha fazla tweet nesnesi ...
-];
+import { deleteTweet } from '../util/Util';
 
 const Home = () => {
-  const [rows, setRows] = useState(initialRows);
+  const [rows, setRows] = useState([]);
   const [checkTwitForm, setCheckTwitForm] = useState(false);
+
+  useEffect(() => {
+    bindData();
+  }, []);
   
   const bindData = async () => {
     setCheckTwitForm(false);
-    //if(localStorage.getItem('token')!=null){
     const rows = await getTweets();
 
     const updatedRows = rows.map((row) => {
@@ -40,69 +35,35 @@ const Home = () => {
     });
 
     setRows(updatedRows);
-    //setMessage("Tweets Listed");
-  /*}else{
-    setRows([]);
-    setMessage("Unauthorized");
-  }*/
   };
 
-  const getTweets = () => {
-    return new Promise((resolve, reject) => {
-      
-      fetch(process.env.REACT_APP_API_ENDPOINT+"/api/Tweets", {
+  const getTweets = async () => {
+    try {
+      const response = await fetch(process.env.REACT_APP_API_ENDPOINT + "/api/Tweets", {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
           Authorization: 'Bearer ' + localStorage.getItem('token')
         }
-      })
-        .then(response => {
-          if (response.ok) {
-            return response.json();
-          } else {
-            throw new Error('Error while getting tweets');
-          }
-        })
-        .then(responseData => {
-          console.log(responseData);
-          resolve(responseData);
-        })
-        .catch(error => {
-          reject(error);
-        });
-    });
+      });
+  
+      if (!response.ok) {
+        throw new Error('Error while getting tweets');
+      }
+  
+      const responseData = await response.json();
+      console.log(responseData);
+  
+      return responseData;
+    } catch (error) {
+      console.error('An error occurred while fetching tweets:', error.message);
+      return [];
+    }
   };
 
   const handleDelete = async (index) => {
-    try {
-      console.log(index);
-      console.log(rows[index].id);
-      // Silinecek tweet'in id'sini al
-      const tweetIdToDelete = rows[index].id; // Bu kısmı gerçek uygulamanıza göre ayarlamalısınız
-
-      // Silme isteğini API'ye gönder
-      const response = await fetch(process.env.REACT_APP_API_ENDPOINT + `/api/Tweets/${tweetIdToDelete}`, {
-        method: 'DELETE',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: 'Bearer ' + localStorage.getItem('token')
-        },
-      });
-
-      if (response.ok) {
-        // Başarılı bir şekilde silindiği varsayılıyor, yerel state'i güncelle
-        const updatedRows = [...rows];
-        updatedRows.splice(index, 1);
-        setRows(updatedRows);
-        console.log('The tweet was successfully deleted.');
-      } else {
-        const errorData = await response.json();
-        console.log(errorData.message); // Tweet does not belong to the user
-      }
-    } catch (error) {
-      console.error('An error occurred while deleting the tweet:', error.message);
-    }
+    const updatedRows = await deleteTweet(rows, index);
+    setRows(updatedRows);
   };
 
   return (
@@ -110,8 +71,7 @@ const Home = () => {
       <center>
         <div className="page-header">
           <div className="header-column"><h1>Home Page</h1></div>
-          <div className="header-column"><button onClick={bindData} >Get Tweets</button>
-                                          <button onClick={() =>setCheckTwitForm(true)} >Send Tweet</button></div>
+          <div className="header-column"><button onClick={() =>setCheckTwitForm(true)} >Send Tweet</button></div>
         </div>
       </center>
 
