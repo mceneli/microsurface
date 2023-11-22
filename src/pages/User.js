@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import TweetFeed from '../components/TweetFeed';
-import { deleteTweet } from '../util/Util';
+import { decodeToken, deleteTweet } from '../util/Util';
 
 const User = () => {
     const location = useLocation();
@@ -9,6 +9,19 @@ const User = () => {
     const username = params.get('username');
     const [rows, setRows] = useState([]);
     const [checkPrivate, setCheckPrivate] = useState(false);
+    const [authorizedUsername, setAuthorizedUsername] = useState('');
+
+    let token = null;
+    if(localStorage.getItem('token')){
+      token = decodeToken(localStorage.getItem('token'));
+    }
+
+    useEffect(() => {
+      bindData();
+      if (token) {
+        setAuthorizedUsername(token["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name"]);
+      } 
+    }, []);
 
     const bindData = async () => {
         const rows = await getUserTweets();
@@ -65,13 +78,35 @@ const User = () => {
         });
       };
 
-    useEffect(() => {
-      bindData();
-    }, []);
-
     const handleDelete = async (index) => {
       const updatedRows = await deleteTweet(rows, index);
       setRows(updatedRows);
+    };
+
+    const makePrivate = async (isPrivate) => {
+      try {
+        const data = {
+          isPrivate: isPrivate
+        };
+    
+        const response = await fetch(process.env.REACT_APP_API_ENDPOINT + "/api/users/MakePrivate", {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+            'Authorization': 'Bearer ' + localStorage.getItem('token')
+          },
+          body: JSON.stringify(data)
+        });
+    
+        if (response.ok) {
+          console.log("Profile Hidden " + isPrivate);
+        } else {
+          console.log("Failed to make profile private.");
+        }
+      } catch (error) {
+        console.log(error.message);
+      }
     };
 
   return (
@@ -82,6 +117,8 @@ const User = () => {
         </div>
         <p>username: {username}</p>
         {checkPrivate && <p>Account is private</p>}
+        {(username === authorizedUsername) && (<div><button onClick={() =>makePrivate(true)} >Make Private</button>
+                                           <button onClick={() =>makePrivate(false)} >Make Public</button></div>)}
       </center>
       
       <div>
