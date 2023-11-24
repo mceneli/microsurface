@@ -109,6 +109,33 @@ const User = () => {
       }
     };
 
+    const subscribe = async () => {
+      try {
+        const data = {
+          username: username
+        };
+    
+        const response = await fetch(process.env.REACT_APP_API_ENDPOINT + "/api/subscription/Subscribe", {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+            'Authorization': 'Bearer ' + localStorage.getItem('token')
+          },
+          body: JSON.stringify(data)
+        });
+    
+        if (response.ok) {
+          console.log("Subscribed");
+        } else {
+          const errorData = await response.json();
+          console.log("Failed to subscription: ", errorData.message);
+        }
+      } catch (error) {
+        console.log(error.message);
+      }
+    };
+
   return (
     <div>
       <center>
@@ -119,6 +146,7 @@ const User = () => {
         {checkPrivate && <p>Account is private</p>}
         {(username === authorizedUsername) && (<div><button onClick={() =>makePrivate(true)} >Make Private</button>
                                            <button onClick={() =>makePrivate(false)} >Make Public</button></div>)}
+        {(checkPrivate && token)&& (<div><button onClick={() =>subscribe()} >Subscribe</button></div>)}
       </center>
       
       <div>
