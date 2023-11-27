@@ -45,3 +45,22 @@ export const deleteTweet = async (rows, index) => {
       return rows; // Hata olursa orijinal rows'u döndür
     }
   };
+
+  export const checkTokenValidity = () => {
+    try {
+      const currentTimestamp = Math.floor(new Date().getTime() / 1000);
+      let token = decodeToken(localStorage.getItem('token'));
+      let tokenTimeStamp = token.exp;
+
+      if(tokenTimeStamp>currentTimestamp){
+        return true;
+      }else{
+        return false;
+      }
+    } catch (error) {
+      console.error('Error decoding token:', error);
+      return null;
+    }
+  };
+
+  

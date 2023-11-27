@@ -67,7 +67,6 @@ button[type="submit"]:hover {
 .center-button {
   background-color: transparent;
   cursor: pointer;
-  /*display: flex;*/
   justify-content: center;
   align-items: center;
   position: fixed;
@@ -102,39 +101,31 @@ li a {
 .fullscreen-page {
   width: 100vw;
   max-width: 400px;
-  height: 90%; /* Set the height to the viewport height */
-  background-color: #f0f0f0; /* Example background color */
-  /*display: flex;*/
-  /*align-items: center;
-  justify-content: center;*/
-  /*flex-direction: column;*/
-  /*border: 1px solid #040404;*/
+  height: 90%;
+  background-color: #f0f0f0;
 }
 
 .page-header {
   height: 10%;
-  /*border: 1px solid #21ad31;*/
 }
 
 .tweet-feed {
-  /*display: flex;*/
   flex-direction: column;
   align-items: center;
-  height: 82%; /* Max height for the tweet feed container */
-  overflow-y: scroll; /* Add vertical scroll */
+  height: 82%;
+  overflow-y: scroll;
   width:96vw;
   max-width: 400px;
   position: fixed;
-  /*border: 1px solid #21a4ad;*/
   margin-top:0%;
 }
 
 .tweet-feed::-webkit-scrollbar {
-  width: 0.1em; /* Width of the scrollbar */
+  width: 0.1em;
 }
 
 .tweet-feed::-webkit-scrollbar-thumb {
-  background-color: transparent; /* Make the thumb (draggable part) transparent */
+  background-color: transparent;
 }
 
 .tweet {
@@ -172,25 +163,21 @@ li a {
   height:7%;
   width:100vw;
   max-width: 400px;
-  /*border: 1px solid #73AD21;*/
 }
-
 .navbar-component {
   height: 100%;
 }
-
 .header-column {
   float: left;
   width: 50%;
   height: 10%;
 }
-
-/* Clear floats after the columns */
 .page-header:after {
   content: "";
   display: table;
   clear: both;
 }
+
 
 /* submit form */
 .tweet-form-container {
@@ -201,20 +188,17 @@ li a {
   border: 1px solid #ddd;
   border-radius: 5px;
 }
-
 label {
   display: block;
   margin-bottom: 5px;
 }
-
 textarea {
   width: 100%;
   padding: 10px;
   margin-bottom: 10px;
   box-sizing: border-box;
-  resize: none; /* Kullanıcıların textarea'yı boyutlandırmalarını önler */
+  resize: none;
 }
-
 button.send-button {
   background-color: #4caf50;
   color: white;
@@ -223,33 +207,30 @@ button.send-button {
   border-radius: 5px;
   cursor: pointer;
 }
-
 button.send-button:hover {
   background-color: #45a049;
 }
 /* /submit form */
 
-/* profiles */
 
+/* profiles */
 .profile-feed {
-  /*display: flex;*/
   flex-direction: column;
   align-items: center;
-  height: 82%; /* Max height for the tweet feed container */
-  overflow-y: scroll; /* Add vertical scroll */
+  height: 82%;
+  overflow-y: scroll;
   width:96vw;
   max-width: 400px;
   position: fixed;
-  /*border: 1px solid #21a4ad;*/
   margin-top:0%;
 }
 
 .profile-feed::-webkit-scrollbar {
-  width: 0.1em; /* Width of the scrollbar */
+  width: 0.1em;
 }
 
 .profile-feed::-webkit-scrollbar-thumb {
-  background-color: transparent; /* Make the thumb (draggable part) transparent */
+  background-color: transparent;
 }
 
 .profile {
@@ -260,5 +241,20 @@ button.send-button:hover {
   background-color: white;
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
 }
-
 /* /profiles */
+
+
+/* fab button */
+.fab-container {
+  position: fixed;
+  bottom: 50px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+@media (min-width: 400px) {
+  .fab-container {
+    left: calc(50% + 150px);
+  }
+}
+/* /fab button */

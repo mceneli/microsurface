@@ -34,7 +34,6 @@ const Profiles = () => {
             }
 
             const responseData = await response.json();
-            console.log(responseData);
 
             return responseData;
         } catch (error) {

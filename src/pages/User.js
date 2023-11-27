@@ -2,14 +2,17 @@ import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import TweetFeed from '../components/TweetFeed';
 import { decodeToken, deleteTweet } from '../util/Util';
+import SnackbarComponent from '../components/SnackbarComponent';
+import UseSnackbar from '../components/UseSnackbar';
 
 const User = () => {
     const location = useLocation();
     const params = new URLSearchParams(location.search);
     const username = params.get('username');
     const [rows, setRows] = useState([]);
-    const [checkPrivate, setCheckPrivate] = useState(false);
+    const [checkPrivate, setCheckPrivate] = useState();
     const [authorizedUsername, setAuthorizedUsername] = useState('');
+    const { open, message, severity, handleOpenSnackbar, handleCloseSnackbar } = UseSnackbar();
 
     let token = null;
     if(localStorage.getItem('token')){
@@ -59,6 +62,7 @@ const User = () => {
           })
             .then(response => {
               if (response.ok) {
+                setCheckPrivate(false);
                 return response.json();
               } else {
                 if(response.statusText === "Bad Request"){
@@ -69,7 +73,6 @@ const User = () => {
               }
             })
             .then(responseData => {
-              console.log(responseData);
               resolve(responseData);
             })
             .catch(error => {
@@ -100,9 +103,9 @@ const User = () => {
         });
     
         if (response.ok) {
-          console.log("Profile Hidden " + isPrivate);
+          handleOpenSnackbar('Profile Hidden is '+ isPrivate, 'success');
         } else {
-          console.log("Failed to make profile private.");
+          handleOpenSnackbar('Failed to changge profile private settings', 'error');
         }
       } catch (error) {
         console.log(error.message);
@@ -126,10 +129,11 @@ const User = () => {
         });
     
         if (response.ok) {
-          console.log("Subscribed");
+          handleOpenSnackbar('Subscribed', 'success');
+          bindData();
         } else {
           const errorData = await response.json();
-          console.log("Failed to subscription: ", errorData.message);
+          handleOpenSnackbar('Failed to subscription: '+errorData.message, 'error');
         }
       } catch (error) {
         console.log(error.message);
@@ -152,6 +156,13 @@ const User = () => {
       <div>
         <TweetFeed tweets={rows} onDelete={handleDelete}/>
       </div>
+
+      <SnackbarComponent
+        open={open}
+        message={message}
+        severity={severity}
+        onClose={handleCloseSnackbar}
+      />
       
     </div>
   );

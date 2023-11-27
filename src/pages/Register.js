@@ -1,11 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import '../styles.css';
+import SnackbarComponent from '../components/SnackbarComponent';
+import UseSnackbar from '../components/UseSnackbar';
 
 const Register = () => {
   const [formData, setFormData] = useState({
     username: '',
     password: '',
   });
+  const { open, message, severity, handleOpenSnackbar, handleCloseSnackbar } = UseSnackbar();
 
   const handleChange = (e) => {
     setFormData({
@@ -16,7 +19,6 @@ const Register = () => {
 
   const handleRegister = async (event) => {
     event.preventDefault();
-    // You can add your registration logic here, such as making an API call.
     try {
       const userdata = { username: formData.username, password: formData.password };
 
@@ -29,16 +31,12 @@ const Register = () => {
       })
       .then(response => response.json())
       .then(data => {
-        console.log(data);
         if(data.result === "1"){
-          console.log("Username already taken");
+          handleOpenSnackbar('Username already taken', 'error');
         }else{
-          console.log("Registered successfully");
+          handleOpenSnackbar('Registered successfully', 'success');
         }
       })
-      .catch(error => {
-        console.error(error);
-      });
 
     } catch (error) {
       console.log(error.message);
@@ -75,6 +73,13 @@ const Register = () => {
         </div>
         <button type="submit">Register</button>
       </form>
+
+      <SnackbarComponent
+        open={open}
+        message={message}
+        severity={severity}
+        onClose={handleCloseSnackbar}
+      />
 
     </div>
   );

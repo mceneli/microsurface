@@ -1,11 +1,14 @@
 import React, { useState } from 'react';
 import '../styles.css';
+import SnackbarComponent from '../components/SnackbarComponent';
+import UseSnackbar from '../components/UseSnackbar';
 
 const Login = () => {
   const [formData, setFormData] = useState({
     username: '',
     password: '',
   });
+  const { open, message, severity, handleOpenSnackbar, handleCloseSnackbar } = UseSnackbar();
 
 const handleChange = (e) => {
   setFormData({
@@ -16,7 +19,6 @@ const handleChange = (e) => {
 
 const handleLogin = async (event) => {
   event.preventDefault();
-  // You can add your registration logic here, such as making an API call.
   try {
     const userdata = { username: formData.username, password: formData.password };
     
@@ -28,17 +30,18 @@ const handleLogin = async (event) => {
       body: JSON.stringify(userdata)
     });
 
-    const responseData = await response.json(); // parse the response body
+    const responseData = await response.json();
     if (responseData.result === "1") {
-      throw new Error('User Not Found');
+      handleOpenSnackbar('User Not Found', 'error');
     }
     if (responseData.result === "2") {
-      throw new Error('Wrong Password');
+      handleOpenSnackbar('Wrong Password', 'error');
     }
-
-    console.log(responseData);
-    console.log("Logged In");
-    localStorage.setItem('token', responseData.token);
+    if (responseData.result === "3") {
+      handleOpenSnackbar('Logged In', 'success');
+      localStorage.setItem('token', responseData.token);
+    }
+    
   } catch (error) {
     console.log(error.message);
   }
@@ -74,6 +77,13 @@ const handleLogin = async (event) => {
         </div>
         <button type="submit">Login</button>
       </form>
+
+      <SnackbarComponent
+        open={open}
+        message={message}
+        severity={severity}
+        onClose={handleCloseSnackbar}
+      />
 
     </div>
   );

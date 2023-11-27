@@ -3,10 +3,14 @@ import '../styles.css';
 import TweetFeed from '../components/TweetFeed';
 import TweetForm from '../components/TweetForm';
 import { deleteTweet } from '../util/Util';
+import Box from '@mui/material/Box';
+import Fab from '@mui/material/Fab';
+import AddIcon from '@mui/icons-material/Add';
 
 const Home = () => {
   const [rows, setRows] = useState([]);
   const [checkTwitForm, setCheckTwitForm] = useState(false);
+  const [isTokenValid, setIsTokenValid] = useState(false);
 
   useEffect(() => {
     bindData();
@@ -52,7 +56,6 @@ const Home = () => {
       }
   
       const responseData = await response.json();
-      console.log(responseData);
   
       return responseData;
     } catch (error) {
@@ -71,7 +74,6 @@ const Home = () => {
       <center>
         <div className="page-header">
           <div className="header-column"><h1>Home Page</h1></div>
-          <div className="header-column"><button onClick={() =>setCheckTwitForm(true)} >Send Tweet</button></div>
         </div>
       </center>
 
@@ -84,6 +86,12 @@ const Home = () => {
         <TweetFeed tweets={rows} onDelete={handleDelete}/>
       </div>)
       }
+      {isTokenValid && (
+      <Box className="fab-container" sx={{ '& > :not(style)': { m: 1 }, }} >
+        <Fab color="primary" aria-label="add">
+          <AddIcon onClick={() =>setCheckTwitForm(true)} />
+        </Fab>
+      </Box>)}
 
     </div>
   );
