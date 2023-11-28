@@ -48,6 +48,9 @@ export const deleteTweet = async (rows, index) => {
 
   export const checkTokenValidity = () => {
     try {
+      if(localStorage.getItem('token')==null){
+        return false;
+      }
       const currentTimestamp = Math.floor(new Date().getTime() / 1000);
       let token = decodeToken(localStorage.getItem('token'));
       let tokenTimeStamp = token.exp;

@@ -247,7 +247,7 @@ button.send-button:hover {
 /* fab button */
 .fab-container {
   position: fixed;
-  bottom: 50px;
+  bottom: 7%;
   left: 50%;
   transform: translateX(-50%);
 }

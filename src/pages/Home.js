@@ -6,6 +6,7 @@ import { deleteTweet } from '../util/Util';
 import Box from '@mui/material/Box';
 import Fab from '@mui/material/Fab';
 import AddIcon from '@mui/icons-material/Add';
+import { checkTokenValidity } from '../util/Util';
 
 const Home = () => {
   const [rows, setRows] = useState([]);
@@ -14,6 +15,7 @@ const Home = () => {
 
   useEffect(() => {
     bindData();
+    setIsTokenValid(checkTokenValidity());
   }, []);
   
   const bindData = async () => {

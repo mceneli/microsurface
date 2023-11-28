@@ -46,7 +46,6 @@ const TweetForm = () => {
     
         setImage(file)
         if (file) {
-          // Resmi önizleme yapmak için Base64'e dönüştür
           const reader = new FileReader();
           reader.onloadend = () => {
             setSelectedImage(reader.result);
